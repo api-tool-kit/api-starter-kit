@@ -15,6 +15,8 @@ var textCsv = require('./representors/text-csv');
 exports.urlencoded = true;
 
 // return supported response bodies
+// selected by http "accept" header
+// defaults to first one in the list
 exports.getTemplates = function() {
   var list = [];
   

@@ -24,7 +24,7 @@ exports.stateValue = function(val, state, request, def) {
   pxy = (req.get && req.get("proxy-prefix") ? req.get("proxy-prefix") : "");
   hst = (req.get && req.get("host") ? req.get("host") : "");
   aty = (pxy !== "" ? pxy : hst);
-
+   
   // handle special macros
   if(v.indexOf("{makeid}")!==-1) {
     v = v.replace("{makeid}",makeId());
@@ -38,11 +38,7 @@ exports.stateValue = function(val, state, request, def) {
     v = v.replace("{fullhost}",(req ? req.protocol : "http") + "://"+ aty );  
     x=1;
   }
-  if(v.indexOf("{date}")!==-1) {
-    v = v.replace("{date}", fDate());
-    x=1;
-  }
- 
+  
   // handle named properties
   for(s in st) {
     if(v.indexOf('{'+s+'}')!==-1) {
@@ -70,28 +66,6 @@ exports.sayHi = function(name) {
   return "Hello " + name;
 } 
 
-// formatted date
-function fDate(dte) {
-  var cdate = dte||new Date();
-  let fdte = cdate.getFullYear() + "-" 
-    + lz(cdate.getMonth() + 1) + "-" 
-    + lz(cdate.getDate()) + " " 
-    + lz(cdate.getHours()) + ":" 
-    + lz(cdate.getMinutes()) + ":" 
-    + lz(cdate.getSeconds());
-     
-  return fdte;
-}
-function lz(n){
-  var rtn = "";
-  if(n <= 9){
-    rtn = "0" + n;
-  }
-  else {
-    rtn = n
-  }
-  return rtn;
-}
 
 // local unique id generator
 function makeId() {
